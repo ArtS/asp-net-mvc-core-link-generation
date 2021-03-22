@@ -1,0 +1,39 @@
+﻿@Model LinksModel
+@using static asp_net_mvc_core_link_generation.Utils
+@using asp_net_mvc_core_link_generation.Controllers
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<div class="text-left">
+    <p>This is example project demonstrates how to use <code>&#64;Html.ActionLink</code>, Anchor Tag Helper <code>&lt;a asp-controller="..." &gt;</code> and <code>Url.Action()</code></p> 
+
+    <h2><code>&#64;Html.ActionLink</code> example</h2>
+    <p>The links are generated in the View with <code>&#64;Html.ActionLink</code> helper method:</p>
+    <ul>
+        <li>@Html.ActionLink("Simple link to a 'Home' controller 'Index' action", "Index", "Home")</li>
+        <li>@Html.ActionLink("A link with parameters to 'Home' controller 'Details' action", "Details", "Home", new { name = "John Doe", id = 100500})</li>
+        <li>@Html.ActionLink("A link with parameters to 'Home' controller 'Details' action with CSS class set to 'css-class'", "Details", "Home", new { name = "John Doe", id = 100500}, new { @class="css-class"})</li>
+        <li>@Html.ActionLink("Safely generated link with parameters to 'Home' controller 'Details' action", nameof(HomeController.Details), Utils.GetControllerName<HomeController>(), new { name = "John Doe", id = 100500})</li>
+    </ul>
+
+    <h2>Anchor Tag Helper <code>&lt;a asp-controller="..."&gt;</code> example</h2>
+    <p>The links are generated in the View with <code>&#64;Html.ActionLink</code> helper method:</p>
+    <ul>
+        <li><a asp-controller="Home" asp-action="Index">Simple link to a 'Home' controller 'Index' action</a></li>
+        <li><a asp-controller="Home" asp-action="Details" asp-route-id="100500" asp-route-name="John Doe">A link with parameters to 'Home' controller 'Details' action</a></li>
+        <li><a asp-controller="@(Utils.GetControllerName<HomeController>())" asp-action="@(nameof(HomeController.Details))" asp-route-id="100500" asp-route-name="John Doe">Safely generated link with parameters to 'Home' controller 'Details' action</a>></li>
+    </ul>
+
+    <h2><code>Url.Action()</code> example</h2>
+    <p>The links below are generated in the Controller with <code>Url.Action()</code> method</p>
+    <ul>
+        @foreach(var link in Model.Links) {
+            <li><a href="@link.URL">@link.Text</a></li>
+        }
+    </ul>
+</div>
